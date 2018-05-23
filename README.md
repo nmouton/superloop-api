@@ -8,11 +8,11 @@ gradlew clean build test
 gradlew bootRun
 
 # :ship: build and deploy :ship:
--Requires docker, gradle, gcloud sdk, kubectl and a google cloud account with a kubernetes cluster configured
--gradlew docker build
--docker build . -t gcr.io/{{project-id}}/superloop-api:{{version}}
--gcloud docker -- push gcr.io/{{project-id}}/superloop-api:{{version}}
+  - Requires docker, gradle, gcloud sdk, kubectl and a google cloud account with a kubernetes cluster configured
+  - gradlew docker build
+  - docker build . -t gcr.io/{{project-id}}/superloop-api:{{version}}
+  - gcloud docker -- push gcr.io/{{project-id}}/superloop-api:{{version}}
 
 # configure a gcloud deployment and expose
--kubectl run {{deplloyment-name}} --image gcr.io/{{project-id}}/superloop-api:{{version}} --port={{port to expose}}
--kubectl expose deployment {{deplloyment-name}} --type=LoadBalancer
+  - kubectl run {{deplloyment-name}} --image gcr.io/{{project-id}}/superloop-api:{{version}} --port={{port to expose}}
+  - kubectl expose deployment {{deplloyment-name}} --type=LoadBalancer
