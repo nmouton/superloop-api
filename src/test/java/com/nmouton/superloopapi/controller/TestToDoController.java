@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import static org.junit.Assert.assertTrue;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -61,12 +62,11 @@ public class TestToDoController {
         String toDoJson = mapper.writerFor(ToDo.class).writeValueAsString(testToDo);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/todo").contentType(MediaType.APPLICATION_JSON).content(toDoJson);
-        MvcResult response = mockMvc.perform(requestBuilder).andExpect(status().is2xxSuccessful()).andReturn();
-
-        TodoStore storedToDo = mapper.readerFor(TodoStore.class).readValue(response.getResponse().getContentAsString());
-
-        Map.Entry<String,ToDo> entry = storedToDo.getToDos().entrySet().iterator().next();
-        assertTrue(testToDo.equals(entry.getValue()));
+        mockMvc.perform(requestBuilder).andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$..name").value("Test Add"))
+                .andExpect(jsonPath("$..description").value("Test to make sure add functionality works"))
+                .andExpect(jsonPath("$..dueDate").value(LocalDate.now().toString()))
+                .andExpect(jsonPath("$..status").value("Pending"));
     }
 
 }
