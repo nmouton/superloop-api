@@ -29,13 +29,13 @@ public class ToDoController {
     private final Logger logger = LoggerFactory.getLogger(ToDoController.class);
 
     @GetMapping(path = "todos", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<TodoStore> getTodos(){
+    public ResponseEntity<HashMap<String, ToDo>> getTodos(){
         logger.trace("received request for list of ToDos, TodoStore: {}", toDoStore);
-        return new ResponseEntity<>(toDoStore, HttpStatus.OK);
+        return new ResponseEntity<>(toDoStore.getToDos(), HttpStatus.OK);
     }
 
     @GetMapping(path = "todos/{status}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> getTodosFilterByStatus(@PathVariable("status") ToDo.Status status){
+    public ResponseEntity<HashMap<String, ToDo>> getTodosFilterByStatus(@PathVariable("status") ToDo.Status status){
         logger.trace("received request for list of ToDos filtered by {}, TodoStore: {}", status, toDoStore);
         return new ResponseEntity<>(toDoStore.getToDosByStatus(status), HttpStatus.OK);
     }
@@ -51,16 +51,16 @@ public class ToDoController {
             path = "todo",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public  ResponseEntity<TodoStore> addToDo(@RequestBody ToDo todo) {
+    public  ResponseEntity<HashMap<String, ToDo>> addToDo(@RequestBody ToDo todo) {
         toDoStore.addToDo(todo);
-        return new ResponseEntity<>(toDoStore, HttpStatus.OK);
+        return new ResponseEntity<>(toDoStore.getToDos(), HttpStatus.OK);
     }
 
     @PutMapping(path = "todo/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public  ResponseEntity<TodoStore> updateToDoById(@PathVariable("id") String toDoId, @RequestBody ToDo toDo) {
+    public  ResponseEntity<HashMap<String, ToDo>> updateToDoById(@PathVariable("id") String toDoId, @RequestBody ToDo toDo) {
         logger.trace("received request to update ToDo: {} {}", toDoId, toDo);
         toDoStore.updateToDoById(toDoId,toDo);
-        return new ResponseEntity<>(toDoStore, HttpStatus.OK);
+        return new ResponseEntity<>(toDoStore.getToDos(), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "todo/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
