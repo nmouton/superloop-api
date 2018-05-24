@@ -34,6 +34,12 @@ public class ToDoController {
         return new ResponseEntity<>(toDoStore, HttpStatus.OK);
     }
 
+    @GetMapping(path = "todos/{status}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<?> getTodosFilterByStatus(@PathVariable("status") ToDo.Status status){
+        logger.trace("received request for list of ToDos filtered by {}, TodoStore: {}", status, toDoStore);
+        return new ResponseEntity<>(toDoStore.getToDosByStatus(status), HttpStatus.OK);
+    }
+
     @GetMapping(path = "todo/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public  ResponseEntity<ToDo> getToDo(@PathVariable("id") String toDoId) {
         logger.trace("received request to get ToDo: {}", toDoId);
