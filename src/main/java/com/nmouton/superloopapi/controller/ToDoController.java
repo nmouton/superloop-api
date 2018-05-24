@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 @Controller
 @RequestMapping(path="/api")
+@CrossOrigin
 public class ToDoController {
 
     @Autowired

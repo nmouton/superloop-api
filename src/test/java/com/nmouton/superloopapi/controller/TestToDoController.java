@@ -53,27 +53,7 @@ public class TestToDoController {
     public void testAddToDo() throws Exception {
 
         ToDo testToDo = ToDo.create()
-                .setDate(LocalDate.now())
-                .setDescription("Test to make sure add functionality works")
-                .setName("Test Add")
-                .setStatus(ToDo.Status.Pending);
-
-        String toDoJson = mapper.writerFor(ToDo.class).writeValueAsString(testToDo);
-
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/todo").contentType(MediaType.APPLICATION_JSON).content(toDoJson);
-        MvcResult response = mockMvc.perform(requestBuilder).andExpect(status().is2xxSuccessful()).andReturn();
-
-        TodoStore storedToDo = mapper.readerFor(TodoStore.class).readValue(response.getResponse().getContentAsString());
-
-        Map.Entry<String,ToDo> entry = storedToDo.getToDos().entrySet().iterator().next();
-        assertTrue(testToDo.equals(entry.getValue()));
-    }
-
-    @Test
-    public void testAddToDo() throws Exception {
-
-        ToDo testToDo = ToDo.create()
-                .setDate(LocalDate.now())
+                .setDueDate(LocalDate.now())
                 .setDescription("Test to make sure add functionality works")
                 .setName("Test Add")
                 .setStatus(ToDo.Status.Pending);

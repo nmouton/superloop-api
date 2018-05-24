@@ -9,7 +9,7 @@ public class ToDo {
 
     private String name;
     private String description;
-    private LocalDate date;
+    private LocalDate dueDate;
     private Status status;
 
     public ToDo() {
@@ -37,12 +37,12 @@ public class ToDo {
         return this;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getDueDate() {
+        return dueDate;
     }
 
-    public ToDo setDate(LocalDate date) {
-        this.date = date;
+    public ToDo setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
         return this;
     }
 
@@ -60,7 +60,7 @@ public class ToDo {
         return "ToDo{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", date=" + date +
+                ", dueDate=" + dueDate +
                 ", status=" + status +
                 '}';
     }
@@ -72,7 +72,7 @@ public class ToDo {
         ToDo toDo = (ToDo) o;
         return Objects.equals(name, toDo.name) &&
                 Objects.equals(description, toDo.description) &&
-                Objects.equals(date, toDo.date) &&
+                Objects.equals(dueDate, toDo.dueDate) &&
                 status == toDo.status;
     }
 }
